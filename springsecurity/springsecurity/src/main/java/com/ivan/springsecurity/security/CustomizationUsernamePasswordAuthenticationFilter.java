@@ -17,8 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.NullRememberMeServices;
-import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -38,8 +36,6 @@ public class CustomizationUsernamePasswordAuthenticationFilter
 
 	private String usernameParam = SPRING_SECURITY_FORM_USERNAME_KEY;
 	private String passwordParam = SPRING_SECURITY_FORM_PASSWORD_KEY;
-
-	private RememberMeServices rememberMeServices = new NullRememberMeServices();
 
 	private static ObjectMapper mapper = new ObjectMapper();
 
@@ -89,12 +85,8 @@ public class CustomizationUsernamePasswordAuthenticationFilter
 			HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 
-		// create a session
-
-		HttpSession session = request.getSession(false);
-		if (!Objects.isNull(session)) session.invalidate();
-
-		session = request.getSession();
+		// if session is null create a session
+		HttpSession session = request.getSession();
 
 		if (logger.isDebugEnabled()) {
 			logger.debug(
@@ -102,9 +94,11 @@ public class CustomizationUsernamePasswordAuthenticationFilter
 							+ authResult);
 		}
 
+		// set spring security information into session
 		SecurityContextHolder.getContext().setAuthentication(authResult);
 
-		rememberMeServices.loginSuccess(request, response, authResult);
+		// set user basic information into session, below is a example.
+		session.setAttribute("", "abc");
 
 		// Fire event
 		if (this.eventPublisher != null) {
@@ -112,6 +106,9 @@ public class CustomizationUsernamePasswordAuthenticationFilter
 					new InteractiveAuthenticationSuccessEvent(authResult,
 							this.getClass()));
 		}
+
+		// TODO return object to front
+
 	}
 
 	public void setUsernameParameter(String usernameParameter) {

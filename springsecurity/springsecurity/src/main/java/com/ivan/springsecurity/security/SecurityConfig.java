@@ -3,8 +3,10 @@ package com.ivan.springsecurity.security;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.header.HeaderWriterFilter;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -19,18 +21,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 * .loginPage("/login").failureUrl("/login-error");
 		 */
 
-		// disable csrf
-		http.csrf().ignoringAntMatchers("/login");
+		http.authorizeRequests().antMatchers("/login").permitAll().anyRequest()
+				.authenticated();
 
-		// customization
+		// protect csrf attack
+		// make sure csrf token expired date more than session expired date
+		// http.csrf().ignoringAntMatchers("/login")
+		// .csrfTokenRepository(new CookieCsrfTokenRepository());
+
+		// disable csrf protection by spring security
+		http.csrf().disable();
+
+		// customization usernamePasswordAuthenticationFilter
 		CustomizationUsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new CustomizationUsernamePasswordAuthenticationFilter(
 				DEFULAT_FILTER_PROCESSES_URL);
+
+		// fix session fixation attack
+		usernamePasswordAuthenticationFilter.setSessionAuthenticationStrategy(
+				new SessionFixationProtectionStrategy());
+
+		usernamePasswordAuthenticationFilter.setAuthenticationFailureHandler(
+				new CustomizationUsernamePasswordAuthenticationFailureHandler());
 
 		http.addFilterAfter(usernamePasswordAuthenticationFilter,
 				LogoutFilter.class);
 
-		// do let spring security create session
-		http.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.NEVER);
+		// customization csrf filter
+		CustomizationCsrfFilter csrfFilter = new CustomizationCsrfFilter(
+				new CookieCsrfTokenRepository());
+
+		http.addFilterAfter(csrfFilter, HeaderWriterFilter.class);
+
+		// disable request cache configurer
+		http.requestCache().disable();
 	}
 }
