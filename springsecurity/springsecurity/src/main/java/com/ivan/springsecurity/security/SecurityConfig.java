@@ -54,5 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// disable request cache configurer
 		http.requestCache().disable();
+
 	}
 }
