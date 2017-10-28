@@ -1,0 +1,15 @@
+#bootstrap.yml is loaded before application.yml
+# we can put the application name and spring.cloud.config.server.git.uri inside bootstrap.yml
+# and some encryption/decryption information
+#
+spring:
+    application:
+            name: configserver
+#####  config reposiotry configuration
+    cloud:
+        config:
+            server:
+                git:
+                    uri: https://github.com/restartlife/springcloudrepo.git
+                    searchPaths: '{application}'
+            
