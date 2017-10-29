@@ -1,9 +1,13 @@
 server:
     port: 8761
 
+#在默认设置下，Eureka服务注册中心也会将自己作为客户端来尝试注册它自己，
+#所以我们需要禁用它的客户端注册行为。(如果你要开启这个配置，你需要启动至少两个eurekaserver
+#让他们互相注册)
 eureka:
     client:
-        registerWithEureka: false
-        fetchRegistry: false
+        registerWithEureka: true
+        fetchRegistry: true
     server:
         waitTimeInMsWhenSyncEmpty: 0
+        
