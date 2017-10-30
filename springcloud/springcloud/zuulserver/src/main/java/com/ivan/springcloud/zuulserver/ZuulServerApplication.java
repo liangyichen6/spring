@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.netflix.zuul.filters.route.ZuulFallbackProvider;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date 2017年10月30日
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 @EnableZuulProxy
 public class ZuulServerApplication {
 
