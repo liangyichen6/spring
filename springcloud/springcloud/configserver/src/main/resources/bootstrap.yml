@@ -12,4 +12,10 @@ spring:
                 git:
                     uri: https://github.com/restartlife/springcloudrepo.git
                     searchPaths: '{application}'
+
+#####   eureka server configuration
+eureka:
+    instance:
+        perferIpAddress: true
+        instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
             

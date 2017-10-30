@@ -7,4 +7,4 @@
 
 #Instance 2
 -Dspring.profiles.active="local" -Dserver.port=8762 -Deureka.instance.hostname="eureka_2" 
--Deureka.client.serviceUrl.defaultZones="http://localhost:8762/eureka"
+-Deureka.client.serviceUrl.defaultZones="http://localhost:8761/eureka"
