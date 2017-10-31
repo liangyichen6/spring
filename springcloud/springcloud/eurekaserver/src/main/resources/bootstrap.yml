@@ -2,7 +2,7 @@ spring:
     application:
 # application name
         name: eurekaserver
-# config server configuration
-    cloud:
-        config:
-            uri: ${CONFIG_SERVER_URL:http://localhost:8888}
+            
+management:
+    security:
+        enabled: false

@@ -6,8 +6,11 @@ server:
 #让他们互相注册)
 eureka:
     client:
-        registerWithEureka: true
-        fetchRegistry: true
+        registerWithEureka: false
+        fetchRegistry: false
     server:
         waitTimeInMsWhenSyncEmpty: 0
-        
+
+management:
+    security:
+        enabled: false
