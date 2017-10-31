@@ -1,3 +1,8 @@
+---
+#=============================================== Local  Env ==============================================
+spring:
+    profiles: local
+
 info:
     component: Zuul Server
 
@@ -24,3 +29,9 @@ logging:
   level:
     ROOT: INFO
     org.springframework.web: DEBUG
+    
+#eureka configuration
+eureka:
+    client:
+        serviceUrl:
+            defaultZones: ${EUREKA_SERVER_URL:http://localhost:8761/eureka} 

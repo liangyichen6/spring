@@ -21,10 +21,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka-server</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
+		<!-- 我觉的discoveryserver 的配置不应该放在configserver中，因为如果discoveryserver的配置依赖于config 
+			server 则configserver 就应该先于discoveryserver 启动，这样我们在discoveryserver中的配置文件就不能用 
+			别名，而只用configserver的地址。这样不利于整个微服务稳定。应为configserver在discoveryserver中做 不到高可用。一旦configserver宕了，discoveryserver也不用保证稳定。 -->
+		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-config</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

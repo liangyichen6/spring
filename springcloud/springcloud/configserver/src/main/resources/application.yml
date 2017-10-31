@@ -1,12 +1,43 @@
-server:
-    port: 8888
-
 management:
     context-path: /admin
     security:
-        enabled: false
-  
+        enabled: false  
 logging:
     level:
         com.netflix.discovery: 'OFF'
-        org.springframework.cloud: 'DEBUG'
+        org.springframework.cloud: 'DEBUG'      
+
+---
+#===============================Local  Env ===================================
+spring:
+    profiles: local       
+server:
+    port: 8888
+
+eureka:
+   instance:
+       hostname: configserver_local
+       
+    
+---    
+#================================Dev_Peer_1   Env ==============================
+spring:
+    profiles: dev_peer_1
+
+server:
+    port: 8889
+
+eureka:
+   instance:
+       hostname: configserver_peer_1
+
+---
+#=================================Dev_Peer_2  Env ===============================
+spring:
+    profiles: dev_peer_2
+server:
+    port: 8890 
+
+eureka:
+    instance: 
+        hostname: configserver_peer_2   
