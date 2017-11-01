@@ -6,3 +6,9 @@ spring:
 management:
     security:
         enabled: false
+
+#1. 如果 enable-self-preservation 设置为false 则如果从eureka client 发送心跳到下一次server接受到心跳的规定时间里,server
+#都没有接收到心跳那么server将会把这个client的注册信息移除出去
+eureka:
+    server:
+        enable-self-preservation: true     #默认为true    

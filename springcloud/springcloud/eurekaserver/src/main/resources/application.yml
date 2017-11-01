@@ -29,11 +29,13 @@ eureka:
         registerWithEureka: true
         fetchRegistry: true
         serviceUrl:
-            defaultZones: http://eureka_dev_peer_2:8762/eureka
+            defaultZone: http://localhost:8762/eureka
     server:
         waitTimeInMsWhenSyncEmpty: 0
     instance:
         hostname: eureka_dev_peer_1
+        # 每隔10给eureka server 发送一次心跳
+        lease-renewal-interval-in-seconds: 10
         
 
 ---
@@ -49,11 +51,13 @@ eureka:
         registerWithEureka: true
         fetchRegistry: true
         serviceUrl:
-            defaultZones: http://eureka_dev_peer_1:8761/eureka
+            defaultZone: http://localhost:8761/eureka
     server:
         waitTimeInMsWhenSyncEmpty: 0
     instance:
-        hostname: eureka_dev_peer_2     
+        hostname: eureka_dev_peer_2 
+        # 每隔10给eureka server 发送一次心跳
+        lease-renewal-interval-in-seconds: 10    
 
 
     
