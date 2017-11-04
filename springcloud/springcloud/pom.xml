@@ -19,6 +19,7 @@
 		<module>configserver</module>
 		<module>eurekaserver</module>
     <module>UserManagementServer</module>
+    <module>AuthServer</module>
   </modules>
 
 	<parent>
