@@ -21,9 +21,9 @@ endpoints:
 #important part
 zuul:
     routes:
-        stores: /stores/**
-        customers: /customers/**
-        zuulserver: /self/**
+        usrmgt:
+            path: /usrmgt/**
+            serviceId: usrmgt
         
 logging:
   level:
