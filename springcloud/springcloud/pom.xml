@@ -20,6 +20,7 @@
 		<module>eurekaserver</module>
     <module>UserManagementServer</module>
     <module>AuthServer</module>
+    <module>imageserver</module>
   </modules>
 
 	<parent>

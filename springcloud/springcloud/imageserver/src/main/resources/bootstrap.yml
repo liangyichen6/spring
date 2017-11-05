@@ -1,0 +1,7 @@
+spring:
+    application:
+        name: imageserver
+
+        
+server:
+    port: 9999
