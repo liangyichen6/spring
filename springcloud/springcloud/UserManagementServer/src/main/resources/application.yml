@@ -1,0 +1,19 @@
+eureka: 
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka
+            instance:
+                metadataMap:
+                    instanceId: ${spring.application.name}:${server.port}
+
+server:
+    port: 9990
+    
+
+logging:
+    level:
+        org:
+            springframework:
+                security: DEBUG
+           
+                

@@ -1,5 +1,7 @@
 package com.ivan.springcloud.usrmgt.bean;
 
+import java.util.List;
+
 public class User {
 
 	private int userId;
@@ -9,6 +11,8 @@ public class User {
 	private String firstName;
 
 	private String lastName;
+
+	private List<String> imageUrls;
 
 	public int getUserId() {
 		return userId;
@@ -40,6 +44,14 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public List<String> getImageUrls() {
+		return imageUrls;
+	}
+
+	public void setImageUrls(List<String> imageUrls) {
+		this.imageUrls = imageUrls;
 	}
 
 }
