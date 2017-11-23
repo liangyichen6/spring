@@ -8,11 +8,11 @@
 ### 通知(advice)
     切面的工作被称为通知.是织入目标类连接点的一段代码
     通知的类型
-  1. 前置通知 [before]
-  2. 后置通知 [after]
-  3. 返回通知 [After-Return]
-  4. 异常通知 [After-throwing]
-  5. 环绕通知 [Around]
+  1. 前置通知 `before`
+  2. 后置通知 `after`
+  3. 返回通知 `After-Return`
+  4. 异常通知 `After-throwing`
+  5. 环绕通知 `Around`
 
 ### 引介(Introduction)
     引入允许我们向现有的类添加新方法或属性，是一种特殊的通知.
