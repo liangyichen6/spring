@@ -3,8 +3,10 @@ package spring.ivan.springaop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import spring.ivan.springaop.bean.ResultMessage;
 import spring.ivan.springaop.bean.User;
 import spring.ivan.springaop.service.UserServiceImpl;
 
@@ -19,5 +21,14 @@ public class LoginController {
 
 		return ResponseEntity.ok()
 				.body(userServiceImpl.login(username, password));
+	}
+
+	@PutMapping(value = "/users")
+	public ResponseEntity<ResultMessage> updateUser() throws Exception {
+		this.userServiceImpl.updateUser();
+		ResultMessage rm = new ResultMessage();
+		rm.setMessage("update user successfully");
+		rm.setStatus(200);
+		return ResponseEntity.ok().body(rm);
 	}
 }

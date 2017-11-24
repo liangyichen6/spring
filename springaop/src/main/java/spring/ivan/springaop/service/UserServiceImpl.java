@@ -8,7 +8,16 @@ import spring.ivan.springaop.bean.User;
 public class UserServiceImpl {
 
 	public User login(String username, String password) {
+		System.out.println("Executing login method");
+		User u = new User();
+		u.setFirstName("Emon");
+		u.setLastName("Huang");
+		u.setUsername("Emon Huang");
+		return u;
+	}
 
-		return new User();
+	public void updateUser() throws Exception {
+		System.out.println("Executing update user...");
+		throw new Exception("Update user failed");
 	}
 }

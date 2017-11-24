@@ -1,11 +1,18 @@
 package spring.ivan.springaop.aop;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import spring.ivan.springaop.bean.User;
 
 /**
  * Service Layer Aspect
@@ -27,14 +34,71 @@ public class ServiceLayerAspect {
 	}
 
 	/**
-	 * 连接点
+	 * 连接点 前置通知
 	 * 
 	 * @param joinPoint
 	 */
 	@Before(value = "executionService()")
 	public void doBeforeAdvice(JoinPoint joinPoint) {
-		System.out.println(String.format("Starting service method %s",
-				joinPoint.getSignature().getName()));
+		System.out.println(String.format("Starting service method %s %s",
+				joinPoint.getSignature().getName(), joinPoint.getClass()));
+	}
+
+	/**
+	 * 后置通知
+	 * 
+	 * @param joinPoint
+	 */
+	@After(value = "executionService()")
+	public void doAfterAdvice(JoinPoint joinPoint) {
+		System.out.println(String.format("Ended service method %s %s",
+				joinPoint.getClass(), joinPoint.getKind()));
+
+	}
+
+	/**
+	 * 返回通知
+	 * 
+	 * @param result
+	 */
+	@AfterReturning(
+			value = "execution(spring.ivan.springaop.bean.User spring.ivan.springaop.service.UserServiceImpl.login(..))",
+			returning = "result")
+	public void doAfterReturning(JoinPoint joinPoint, Object result) {
+		System.out.println(joinPoint.getSignature().getClass());
+		System.out.println(joinPoint.getSignature().getDeclaringTypeName());
+		User u = (User) result;
+		System.out.println(u);
+	}
+
+	/**
+	 * 异常通知
+	 * 
+	 * @param ex
+	 */
+	@AfterThrowing(
+			value = "execution(void spring.ivan.springaop.service.UserServiceImpl.updateUser(..)))",
+			throwing = "ex")
+	public void doAfterThrowing(Throwable ex) {
+		System.out.println("AfterThrowing starting...");
+		System.out.println(ex.getMessage());
+	}
+
+	/**
+	 * 环绕通知
+	 * 
+	 * @param pjp
+	 * @return
+	 * @throws Throwable
+	 */
+	@Around(value = "execution(* spring.ivan.springaop.controller.*.*(..))")
+	public void doAround(ProceedingJoinPoint pjp) throws Throwable {
+		System.out.println(pjp.getSignature().getName());
+
+		pjp.proceed();
+
+		System.out.println("Ending around....");
+
 	}
 
 }
