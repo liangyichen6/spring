@@ -20,4 +20,8 @@ public class UserServiceImpl {
 		System.out.println("Executing update user...");
 		throw new Exception("Update user failed");
 	}
+
+	public void deleteUser(Long userId) {
+		System.out.println(userId);
+	}
 }

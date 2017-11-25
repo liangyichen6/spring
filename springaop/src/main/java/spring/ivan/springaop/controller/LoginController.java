@@ -2,6 +2,7 @@ package spring.ivan.springaop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +31,13 @@ public class LoginController {
 		rm.setMessage("update user successfully");
 		rm.setStatus(200);
 		return ResponseEntity.ok().body(rm);
+	}
+
+	@DeleteMapping(value = "/users")
+	public ResponseEntity<ResultMessage> deleteUser() {
+		this.userServiceImpl.deleteUser(20l);
+		ResultMessage rm = new ResultMessage();
+		rm.setMessage("update user successfully");
+		return ResponseEntity.ok(rm);
 	}
 }
