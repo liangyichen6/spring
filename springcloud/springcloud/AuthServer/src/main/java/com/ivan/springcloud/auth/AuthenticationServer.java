@@ -1,6 +1,7 @@
 package com.ivan.springcloud.auth;
 
 import java.security.KeyPair;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,10 +17,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+
+import com.google.common.collect.Lists;
 
 @SpringBootApplication
 @EnableWebSecurity
@@ -72,7 +77,8 @@ public class AuthenticationServer {
             endpoints.authenticationManager(authenticationManager)
                      .tokenStore(jwtTokenStore)
                      .accessTokenConverter(jwtAccessTokenConverter())
-                     .userDetailsService(new CustomUserDetailsService());
+                     .userDetailsService(new CustomUserDetailsService())
+                     .tokenEnhancer(tokenEnhancerChain());
         }
 
         @Override
@@ -91,7 +97,21 @@ public class AuthenticationServer {
             JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
             KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("keystore.jks"), "123456".toCharArray()).getKeyPair("pip");
             converter.setKeyPair(keyPair);
+
             return converter;
+        }
+
+        private TokenEnhancerChain tokenEnhancerChain() {
+
+            TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+
+            List<TokenEnhancer> tokenEnhancers = Lists.newArrayList();
+            tokenEnhancers.add(new AdditionalInformationTokenEnhancer());
+            tokenEnhancers.add(new JwtAccessTokenConverter());
+            tokenEnhancerChain.setTokenEnhancers(tokenEnhancers);
+
+            return tokenEnhancerChain;
+
         }
     }
 

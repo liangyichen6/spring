@@ -7,5 +7,4 @@ logging:
                 
 security:
     user:
-        password:
-            password
+        password: password
